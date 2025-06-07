@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .endpoint {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .response {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Test Interface</h1>
+    
+    <div class="endpoint">
+        <h2>Welcome Message</h2>
+        <button onclick="testWelcome()">Test /api endpoint</button>
+        <div id="welcomeResponse" class="response"></div>
+    </div>
+
+    <div class="endpoint">
+        <h2>Status Check</h2>
+        <button onclick="testStatus()">Test /api/status endpoint</button>
+        <div id="statusResponse" class="response"></div>
+    </div>
+
+    <script>
+        async function testWelcome() {
+            try {
+                const response = await fetch('/api');
+                const data = await response.json();
+                document.getElementById('welcomeResponse').textContent = 
+                    JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('welcomeResponse').textContent = 
+                    'Error: ' + error.message;
+            }
+        }
+
+        async function testStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                document.getElementById('statusResponse').textContent = 
+                    JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('statusResponse').textContent = 
+                    'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
