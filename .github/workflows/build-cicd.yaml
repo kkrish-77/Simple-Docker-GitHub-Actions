@@ -1,4 +1,4 @@
-name: Simple CI 
+name: Simple CI/CD
 on:
     push:
         branches: [main]
@@ -18,5 +18,9 @@ jobs:
               run: docker build -t test-application .
             - name: Run the Container
               run: docker run -d -p 3000:3000 test-application
+            - name: Wait for the application to start
+              run: sleep 10
             - name: Check the Container
               run: docker ps
+            - name: Verify the Application
+              run: curl http://localhost:3000/api/status
